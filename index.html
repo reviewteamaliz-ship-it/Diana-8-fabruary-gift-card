@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Propose Day Diana 💍</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+    font-family:'Segoe UI',sans-serif;
+    overflow:hidden;
+}
+
+/* Floating hearts animation */
+.fall{
+    position:absolute;
+    animation:fall 7s linear infinite;
+    pointer-events:none;
+}
+@keyframes fall{
+    0%{transform:translateY(-10vh) rotate(0deg); opacity:0;}
+    10%{opacity:1;}
+    100%{transform:translateY(110vh) rotate(360deg); opacity:0;}
+}
+
+/* Floating bubbles in background */
+.bubble {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    pointer-events: none;
+    animation: floatUp 15s infinite ease-in;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(100vh) scale(0);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.8;
+    }
+    90% {
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(-100px) scale(1);
+        opacity: 0;
+    }
+}
+
+/* Card styling */
+.card{
+    width:330px;
+    height:460px;
+    perspective:1600px;
+    position:relative;
+}
+
+.page{
+    width:100%;
+    height:100%;
+    position:absolute;
+    border-radius:20px;
+    box-shadow:0 30px 60px rgba(0,0,0,0.7);
+    transform-origin:left;
+    transform-style:preserve-3d;
+    transition:transform 1.1s ease-in-out;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:22px;
+    box-sizing:border-box;
+    color:white;
+    overflow: hidden;
+}
+
+/* Background for each page */
+#p1{
+    background: linear-gradient(135deg, rgba(176, 0, 32, 0.9), rgba(255, 78, 80, 0.9)), 
+                url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDMwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTUwIiBjeT0iMTUwIiByPSIxMjAiIGZpbGw9InVybCgjYikiLz48ZGVmcz48cmFkaWFsR3JhZGllbnQgaWQ9ImIiIGN4PSIxNTAiIGN5PSIxNTAiIHI9IjE1MCIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIHN0b3AtY29sb3I9IiNGRjAwMDAiIHN0b3Atb3BhY2l0eT0iMC4xIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjRkYwMDAwIiBzdG9wLW9wYWNpdHk9IjAiLz48L3JhZGlhbEdyYWRpZW50PjwvZGVmcz48L3N2Zz4=');
+    background-size: cover;
+    z-index:5;
+}
+
+#p2{
+    background: linear-gradient(135deg, rgba(123, 47, 247, 0.9), rgba(241, 7, 163, 0.9)), 
+                url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDQwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTAgMEg0MDBWNDAwSDBWMFoiIGZpbGw9InVybCgjeCkiLz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9IngiIHgxPSIwIiB5MT0iMCIgeDI9IjQwMCIgeTI9IjQwMCIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIHN0b3AtY29sb3I9IiNGRkZGRkYiIHN0b3Atb3BhY2l0eT0iMC4wNSIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0iI0ZGRkZGRiIgc3RvcC1vcGFjaXR5PSIwIi8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PC9zdmc+');
+    background-size: cover;
+    z-index:4;
+}
+
+#p3{
+    background: linear-gradient(135deg, rgba(15, 32, 39, 0.9), rgba(32, 58, 67, 0.9), rgba(44, 83, 100, 0.9)), 
+                url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDMwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMTUwIiBjeT0iMTUwIiByPSIxMDAiIGZpbGw9IiNGRkZGRkYiIGZpbGwtb3BhY2l0eT0iMC4wNSIvPjxjaXJjbGUgY3g9IjUwIiBjeT0iNTAiIHI9IjMwIiBmaWxsPSIjRkZGRkZGIiBmaWxsLW9wYWNpdHk9IjAuMDMiLz48Y2lyY2xlIGN4PSIyNTAiIGN5PSIyNTAiIHI9IjQwIiBmaWxsPSIjRkZGRkZGIiBmaWxsLW9wYWNpdHk9IjAuMDMiLz48L3N2Zz4=');
+    background-size: cover;
+    z-index:3;
+}
+
+#p4{
+    background: linear-gradient(135deg, rgba(255, 179, 71, 0.9), rgba(255, 204, 51, 0.9)), 
+                url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjQwMCIgdmlld0JveD0iMCAwIDQwMCA0MDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTAgMEg0MDBWNDAwSDBWMFoiIGZpbGw9InVybCgjeCkiLz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9IngiIHgxPSIwIiB5MT0iMCIgeDI9IjQwMCIgeTI9IjQwMCIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIHN0b3AtY29sb3I9IiNGRkZGRkYiIHN0b3Atb3BhY2l0eT0iMC4xIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjRkZGRkZGIiBzdG9wLW9wYWNpdHk9IjAiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48L3N2Zz4=');
+    background-size: cover;
+    z-index:2;
+}
+
+#p5{
+    background: linear-gradient(135deg, rgba(17, 153, 142, 0.9), rgba(56, 239, 125, 0.9)), 
+                url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDMwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTAgMEgzMDBWMzAwSDBWMFoiIGZpbGw9InVybCgjeCkiLz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9IngiIHgxPSIwIiB5MT0iMCIgeDI9IjMwMCIgeTI9IjMwMCIgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiPjxzdG9wIHN0b3AtY29sb3I9IiNGRkZGRkYiIHN0b3Atb3BhY2l0eT0iMC4xIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjRkZGRkZGIiBzdG9wLW9wYWNpdHk9IjAiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48L3N2Zz4=');
+    background-size: cover;
+    z-index:1;
+}
+
+.open1 #p1{transform:rotateY(-180deg);}
+.open2 #p2{transform:rotateY(-180deg);}
+.open3 #p3{transform:rotateY(-180deg);}
+.open4 #p4{transform:rotateY(-180deg);}
+
+/* Page content containers */
+.page-content {
+    position: relative;
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    border-radius: 15px;
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    max-width: 90%;
+}
+
+.btn{
+    margin-top:18px;
+    padding:10px 24px;
+    border:none;
+    border-radius:30px;
+    background:#fff;
+    font-size:15px;
+    cursor:pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    font-weight: bold;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+.icon{
+    font-size:70px;
+    animation:pulse 2s infinite;
+}
+
+@keyframes pulse{
+    0%{transform:scale(1);}
+    50%{transform:scale(1.2);}
+    100%{transform:scale(1);}
+}
+
+.name{
+    font-size:32px;
+    font-weight:bold;
+    text-shadow:0 0 20px #fff;
+    margin-bottom: 10px;
+}
+
+.cursor{animation:blink 1s infinite;}
+@keyframes blink{50%{opacity:0;}}
+
+.float{animation:float 3s ease-in-out infinite;}
+@keyframes float{
+    50%{transform:translateY(-10px);}
+}
+
+.wave{animation:wave 2.5s ease-in-out infinite;}
+@keyframes wave{
+    50%{transform:rotate(1deg);}
+}
+
+.heartbeat{animation:heartbeat 1.2s infinite;}
+@keyframes heartbeat{
+    30%{transform:scale(1.15);}
+}
+
+/* Stickers and decorative elements */
+.sticker {
+    position: absolute;
+    font-size: 40px;
+    z-index: 5;
+    opacity: 0.8;
+    animation: stickerFloat 8s infinite ease-in-out;
+}
+
+@keyframes stickerFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(10deg); }
+}
+
+.heart-sticker {
+    color: #ff4e50;
+    text-shadow: 0 0 10px rgba(255, 78, 80, 0.7);
+}
+
+.star-sticker {
+    color: #FFD700;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+}
+
+.sparkle-sticker {
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.9);
+}
+
+.flower-sticker {
+    color: #FF69B4;
+    text-shadow: 0 0 10px rgba(255, 105, 180, 0.7);
+}
+
+/* Page specific decorations */
+.page-decoration {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* Twinkling stars effect */
+.twinkle {
+    position: absolute;
+    background-color: white;
+    border-radius: 50%;
+    animation: twinkle 3s infinite;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 1; }
+}
+
+/* Floating ribbons */
+.ribbon {
+    position: absolute;
+    width: 100px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    transform: rotate(45deg);
+    animation: ribbonFloat 10s infinite linear;
+}
+
+@keyframes ribbonFloat {
+    0% { transform: translateY(100px) rotate(45deg); opacity: 0; }
+    10% { opacity: 0.5; }
+    90% { opacity: 0.5; }
+    100% { transform: translateY(-500px) rotate(45deg); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card" id="card">
+
+<!-- PAGE 1 -->
+<div class="page" id="p1">
+    <div class="page-decoration" id="decoration1"></div>
+    <div class="page-content">
+        <div class="icon">💌</div>
+        <h1>Happy Propose Day 💖</h1>
+        <p>
+            8 February 💫<br><br>
+            This is not just a card,<br>
+            it's a small part of my heart 💓<br>
+            made specially… just for you 😌
+        </p>
+        <button class="btn" onclick="openPage(1)">Open ❤️</button>
+    </div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="page" id="p2">
+    <div class="page-decoration" id="decoration2"></div>
+    <div class="page-content">
+        <div class="name" id="name"></div>
+        <p>
+            I never planned to fall in love 💭<br>
+            but then you happened 💕<br><br>
+            Slowly… quietly…<br>
+            you became my favorite thought 🌸<br>
+            my comfort 😇 and my smile 😊
+        </p>
+        <button class="btn" onclick="openPage(2)">Next 💞</button>
+    </div>
+</div>
+
+<!-- PAGE 3 -->
+<div class="page" id="p3">
+    <div class="page-decoration" id="decoration3"></div>
+    <div class="page-content">
+        <div class="float">
+            <p>
+                We are miles apart 🌍<br>
+                different countries, different skies ✈️<br><br>
+                But every heartbeat of mine 💓<br>
+                knows only one place — you ❤️<br><br>
+                Distance tried to test us,<br>
+                but love made us stronger 💪✨
+            </p>
+            <button class="btn" onclick="openPage(3)">Next 💖</button>
+        </div>
+    </div>
+</div>
+
+<!-- PAGE 4 -->
+<div class="page" id="p4">
+    <div class="page-decoration" id="decoration4"></div>
+    <div class="page-content">
+        <div class="wave">
+            <p>
+                I promise you this 🤞💛<br><br>
+                I'll stand by you in good days ☀️<br>
+                and hold you tighter in bad ones 🌧️<br><br>
+                I'll respect you 🙏<br>
+                support your dreams 🌠<br>
+                and choose you… every single day 💞
+            </p>
+            <button class="btn" onclick="openPage(4)">Final 💍</button>
+        </div>
+    </div>
+</div>
+
+<!-- PAGE 5 -->
+<div class="page" id="p5">
+    <div class="page-decoration" id="decoration5"></div>
+    <div class="page-content">
+        <div class="heartbeat">
+            <div class="icon">💍</div>
+            <p>
+                Diana ❤️<br><br>
+                Not just today…<br>
+                not just this moment…<br><br>
+                But for all my tomorrows 🌈<br>
+                for every heartbeat 💓<br>
+                and every dream ✨<br><br>
+                Will you be mine? 😌💍
+            </p>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<script>
+const card = document.getElementById("card");
+function openPage(n) { 
+    card.classList.add("open" + n); 
+}
+
+// Type Diana name with effect
+const nameText = "Diana";
+let i = 0;
+const nameEl = document.getElementById("name");
+function typeName() {
+    if (i < nameText.length) {
+        nameEl.innerHTML += nameText[i++];
+        setTimeout(typeName, 200);
+    } else {
+        nameEl.innerHTML += '<span class="cursor">|</span>';
+    }
+}
+typeName();
+
+// Falling hearts and sparkles
+setInterval(() => {
+    const el = document.createElement("div");
+    el.className = "fall";
+    el.innerHTML = Math.random() > 0.5 ? "❤" : "✨";
+    el.style.left = Math.random() * 100 + "vw";
+    el.style.fontSize = (14 + Math.random() * 20) + "px";
+    el.style.color = Math.random() > 0.5 ? "#ff4e50" : "#FFD700";
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 7000);
+}, 300);
+
+// Create background bubbles
+function createBubbles() {
+    for (let i = 0; i < 20; i++) {
+        const bubble = document.createElement("div");
+        bubble.className = "bubble";
+        const size = Math.random() * 60 + 10;
+        bubble.style.width = size + "px";
+        bubble.style.height = size + "px";
+        bubble.style.left = Math.random() * 100 + "vw";
+        bubble.style.animationDelay = Math.random() * 5 + "s";
+        bubble.style.animationDuration = (10 + Math.random() * 20) + "s";
+        document.body.appendChild(bubble);
+    }
+}
+
+// Create stickers for each page
+function createStickers(pageId, decorationId) {
+    const page = document.getElementById(pageId);
+    const decoration = document.getElementById(decorationId);
+    
+    // Create different stickers based on page
+    const stickerCount = 8;
+    const stickerTypes = ['heart-sticker', 'star-sticker', 'sparkle-sticker', 'flower-sticker'];
+    const emojis = ['❤️', '💖', '✨', '🌟', '🌹', '💐', '🌸', '💕'];
+    
+    for (let i = 0; i < stickerCount; i++) {
+        const sticker = document.createElement("div");
+        const typeIndex = Math.floor(Math.random() * stickerTypes.length);
+        sticker.className = `sticker ${stickerTypes[typeIndex]}`;
+        sticker.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+        
+        // Random position
+        sticker.style.left = Math.random() * 85 + 5 + "%";
+        sticker.style.top = Math.random() * 85 + 5 + "%";
+        
+        // Random size
+        const size = Math.random() * 30 + 25;
+        sticker.style.fontSize = size + "px";
+        
+        // Random animation delay
+        sticker.style.animationDelay = Math.random() * 5 + "s";
+        
+        decoration.appendChild(sticker);
+    }
+    
+    // Add twinkling stars for some pages
+    if (pageId === "p3" || pageId === "p5") {
+        for (let i = 0; i < 15; i++) {
+            const star = document.createElement("div");
+            star.className = "twinkle";
+            
+            // Random position
+            star.style.left = Math.random() * 95 + "%";
+            star.style.top = Math.random() * 95 + "%";
+            
+            // Random size
+            const size = Math.random() * 4 + 2;
+            star.style.width = size + "px";
+            star.style.height = size + "px";
+            
+            // Random animation delay
+            star.style.animationDelay = Math.random() * 3 + "s";
+            
+            decoration.appendChild(star);
+        }
+    }
+    
+    // Add floating ribbons for page 5
+    if (pageId === "p5") {
+        for (let i = 0; i < 5; i++) {
+            const ribbon = document.createElement("div");
+            ribbon.className = "ribbon";
+            
+            // Random position
+            ribbon.style.left = Math.random() * 80 + 10 + "%";
+            
+            // Random color
+            const colors = ['rgba(255, 105, 180, 0.3)', 'rgba(255, 215, 0, 0.3)', 'rgba(255, 255, 255, 0.3)'];
+            ribbon.style.background = colors[Math.floor(Math.random() * colors.length)];
+            
+            // Random animation delay
+            ribbon.style.animationDelay = Math.random() * 5 + "s";
+            
+            decoration.appendChild(ribbon);
+        }
+    }
+}
+
+// Initialize all decorations when page loads
+window.onload = function() {
+    createBubbles();
+    
+    // Create stickers for each page
+    createStickers("p1", "decoration1");
+    createStickers("p2", "decoration2");
+    createStickers("p3", "decoration3");
+    createStickers("p4", "decoration4");
+    createStickers("p5", "decoration5");
+    
+    // Add click sound effect for buttons
+    const buttons = document.querySelectorAll('.btn');
+    buttons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Create a subtle click effect
+            this.style.transform = 'scale(0.95)';
+            setTimeout(() => {
+                this.style.transform = '';
+            }, 150);
+        });
+    });
+};
+</script>
+
+</body>
+</html>
